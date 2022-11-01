@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+const bcrypt = require("bcrypt");
 const {
   phonenumber,
   nameValidator,
@@ -18,8 +19,10 @@ async function registerModel(Email, Name, Phonenumber, Password) {
     console.log(errors);
     return 0;
   }
+  const salt = bcrypt.genSalt(10);
   connection.connect();
-  let query = `INSERT INTO users VALUES (UUID_SHORT(), '${Email}', '${Name}', '${Phonenumber}', '${Password}', CURRENT_DATE())`;
+  const hash = await bcrypt.hash(Password, await salt);
+  let query = `INSERT INTO users VALUES (UUID_SHORT(), '${Email}', '${Name}', '${Phonenumber}', '${hash}', CURRENT_DATE())`;
   await connection.query(query, (error, rows, fileds) => {
     if (error) {
       throw error;

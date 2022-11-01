@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-
+import { Link } from "react-router-dom";
 import { email, password } from "../input/Validator";
 
 const validate = (values) => {
@@ -83,6 +83,9 @@ function Login() {
           <input type="submit" value="Login" />
         </div>
       </form>
+      <div>
+        <Link to="/user/register">Register here</Link>
+      </div>
     </center>
   );
 }

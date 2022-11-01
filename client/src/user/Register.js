@@ -1,4 +1,6 @@
 import { useFormik } from "formik";
+import { Link } from "react-router-dom";
+
 import {
   email,
   password,
@@ -129,6 +131,7 @@ export default function Register() {
           <input type="submit" value="Register" />
         </div>
       </form>
+      <Link to="/user/login">Register here</Link>
     </center>
   );
 }
