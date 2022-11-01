@@ -5,7 +5,7 @@ const login = async (req, res) => {
     let resp = await loginModel(req.body.email, req.body.password);
     console.log(resp);
     if (resp === true) {
-      res.send("login api works!");
+      res.send({ success: "login api works!" });
     }
   } catch (error) {
     console.log(error);

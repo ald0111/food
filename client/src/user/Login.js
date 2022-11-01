@@ -28,14 +28,24 @@ function Login() {
       email: values.email,
       password: values.password,
     });
-    let req = fetch("/api/user/login", {
-      method: "post",
-      body: jsonBody,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log(await req);
+    try {
+      let response = await fetch("/api/user/login", {
+        method: "post",
+        body: jsonBody,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.ok);
+      if (response.ok) {
+        console.log("test");
+      } else {
+        // formik.errors = response.json();
+        console.log(await response.json());
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <center>

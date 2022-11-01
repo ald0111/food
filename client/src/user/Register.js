@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import {
   email,
   password,
-  name,
   phonenumber,
   nameValidator,
 } from "../input/Validator";
@@ -41,14 +40,29 @@ export default function Register() {
       phonenumber: values.phonenumber,
       password: values.password,
     });
-    let req = fetch("/api/user/register", {
-      method: "post",
-      body: jsonBody,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log(await req);
+    try {
+      let response = await fetch("/api/user/register", {
+        method: "post",
+        body: jsonBody,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response);
+      console.log(response.ok);
+      if (response.ok) {
+        console.log("test");
+        formik.setStatus({});
+      } else {
+        // formik.errors = await response.json();
+        // formik.touched.name = true;
+        // formik.errors.name = "testing";
+        formik.setStatus(await response.json());
+        // console.log(await response.json());
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <center>
@@ -68,12 +82,18 @@ export default function Register() {
             name="email"
             id="email"
           />
-          {formik.touched.email && formik.errors.email && (
+          {(formik.touched.email && formik.errors.email && (
             <>
               <br></br>
               <span>{formik.errors.email}</span>
             </>
-          )}
+          )) ||
+            (formik.status && (
+              <>
+                <br></br>
+                <span>{formik.status.email}</span>
+              </>
+            ))}
         </div>
         <div>
           <input
@@ -103,12 +123,18 @@ export default function Register() {
             name="phonenumber"
             id="phonenumber"
           />
-          {formik.touched.phonenumber && formik.errors.phonenumber && (
+          {(formik.touched.phonenumber && formik.errors.phonenumber && (
             <>
               <br></br>
               <span>{formik.errors.phonenumber}</span>
             </>
-          )}
+          )) ||
+            (formik.status && (
+              <>
+                <br></br>
+                <span>{formik.status.phonenumber}</span>
+              </>
+            ))}
         </div>
         <div>
           <input
@@ -131,7 +157,7 @@ export default function Register() {
           <input type="submit" value="Register" />
         </div>
       </form>
-      <Link to="/user/login">Register here</Link>
+      <Link to="/user/login">Login here</Link>
     </center>
   );
 }
