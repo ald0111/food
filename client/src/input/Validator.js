@@ -1,11 +1,11 @@
-export function email(email, errors) {
+function email(email, errors) {
   if (!email) {
     errors.email = "Required";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
     errors.email = "Invalid email address";
   }
 }
-export function password(password, errors) {
+function password(password, errors) {
   if (!password) {
     errors.password = "Required";
     //   } else if (!/^[A-Z0-9._%+-]*$/i.test(password)) {
@@ -20,7 +20,7 @@ export function password(password, errors) {
   }
 }
 
-export function phonenumber(phonenumber, errors) {
+function phonenumber(phonenumber, errors) {
   if (!phonenumber) {
     errors.phonenumber = "Required";
   } else if (!/^[0-9]{10}$/i.test(phonenumber)) {
@@ -28,10 +28,12 @@ export function phonenumber(phonenumber, errors) {
   }
 }
 
-export function name(name, errors) {
+function nameValidator(name, errors) {
   if (!name) {
     errors.name = "Required";
-  } else if (!/^[A-Za-z]{3,24}$/i.test(name)) {
+  } else if (!/^[A-Za-z\x20]{3,24}$/i.test(name)) {
     errors.name = "Invalid name";
   }
 }
+
+module.exports = { email, nameValidator, password, phonenumber };

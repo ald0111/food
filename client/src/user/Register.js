@@ -1,12 +1,18 @@
 import { useFormik } from "formik";
-import { email, password, name, phonenumber } from "../input/Validator";
+import {
+  email,
+  password,
+  name,
+  phonenumber,
+  nameValidator,
+} from "../input/Validator";
 
 const validate = (values) => {
   let errors = {};
 
   email(values.email, errors);
   password(values.password, errors);
-  name(values.name, errors);
+  nameValidator(values.name, errors);
   phonenumber(values.phonenumber, errors);
   // console.log(values.email, errors);
   return errors;
@@ -26,11 +32,13 @@ export default function Register() {
       registerHandler(values);
     },
   });
-  const registerHandler = async (event) => {
-    event.preventDefault();
-    let email = event.target.elements.email.value;
-    let password = event.target.elements.password.value;
-    let jsonBody = JSON.stringify({ email: email, password: password });
+  const registerHandler = async (values) => {
+    let jsonBody = JSON.stringify({
+      email: values.email,
+      name: values.name,
+      phonenumber: values.phonenumber,
+      password: values.password,
+    });
     let req = fetch("/api/user/register", {
       method: "post",
       body: jsonBody,
