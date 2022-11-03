@@ -1,6 +1,6 @@
 // import logo from "./logo.svg";
 import "./App.css";
-import UserRouter from "./user/user.router";
+import UserRouter from "./components/user/user.router";
 
 import { BrowserRouter as Router } from "react-router-dom";
 // import { Routes, Route } from "react-router-dom";

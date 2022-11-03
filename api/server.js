@@ -1,7 +1,8 @@
 const express = require("express");
-
+const dotenv = require("dotenv");
 class Server {
   constructor() {
+    dotenv.config();
     this.app = express();
     this.port = 8000; // Loaded from .env file
     this.paths = {

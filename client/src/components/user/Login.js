@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
-import { email, password } from "../input/Validator";
+import { email, password } from "../../functions/input/Validator";
 
 const validate = (values) => {
   let errors = {};
@@ -38,10 +38,15 @@ function Login() {
       });
       console.log(response.ok);
       if (response.ok) {
+        let resp = await response.json();
+        console.log(resp);
+        localStorage.setItem("token", resp.token);
+        localStorage.setItem("name", resp.name);
         console.log("test");
       } else {
         // formik.errors = response.json();
-        console.log(await response.json());
+        formik.setStatus(await response.json());
+        // console.log(await response.json());
       }
     } catch (error) {
       console.log(error);
@@ -55,6 +60,7 @@ function Login() {
         action="/api/user/login"
         method="post"
       >
+        {formik.status && <span>{formik.status.error}</span>}
         <div>
           <input
             type="email"

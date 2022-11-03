@@ -29,7 +29,7 @@ const register = async (req, res) => {
       req.body.password
     );
     console.log(req.body);
-    res.send("cool");
+    res.status(201).send({ success: "cool" });
   } catch (error) {
     res.status(400).send({ error: "Registration failed" });
   }

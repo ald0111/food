@@ -6,7 +6,7 @@ import {
   password,
   phonenumber,
   nameValidator,
-} from "../input/Validator";
+} from "../../functions/input/Validator";
 
 const validate = (values) => {
   let errors = {};

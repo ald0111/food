@@ -5,7 +5,7 @@ const {
   nameValidator,
   password,
   email,
-} = require("../../client/src/input/Validator");
+} = require("../../client/src/functions/input/Validator");
 const config = require("../configs/db.config");
 
 async function registerModel(Email, Name, Phonenumber, Password) {

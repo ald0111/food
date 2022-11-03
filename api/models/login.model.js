@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const bcrypt = require("bcrypt");
-const { email } = require("../../client/src/input/Validator");
+const { email } = require("../../client/src/functions/input/Validator");
 const config = require("../configs/db.config");
 
 function loginModel(Email, Password, err = {}) {
@@ -23,11 +23,13 @@ function loginModel(Email, Password, err = {}) {
       if (error) {
         throw error;
       }
+      let userId;
+      let name;
 
       if (rows.length === 1) {
         let row = rows[0];
-        let userId = row.userId;
-        let name = row.name;
+        userId = row.userId;
+        name = row.name;
         let password = row.password;
         let valid = await bcrypt.compare(Password, password);
 
@@ -40,7 +42,7 @@ function loginModel(Email, Password, err = {}) {
       connection.end();
 
       if (Object.keys(errors).length === 0) {
-        resolve(true);
+        resolve({ userId: userId, name: name });
       } else {
         reject(errors);
       }

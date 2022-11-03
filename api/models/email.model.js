@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 
-const { email } = require("../../client/src/input/Validator");
+const { email } = require("../../client/src/functions/input/Validator");
 const config = require("../configs/db.config");
 
 async function emailModel(Email, err = {}) {
