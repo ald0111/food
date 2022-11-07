@@ -1,6 +1,9 @@
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
 import { email, password } from "../../functions/input/Validator";
+import { Redirect } from "../../functions/Token";
+import { useEffect } from "react";
+import tokenExists from "../../functions/Token";
 
 const validate = (values) => {
   let errors = {};
@@ -11,11 +14,20 @@ const validate = (values) => {
   return errors;
 };
 
-function Login() {
+function Login(props) {
+  Redirect();
+  const navigate = useNavigate();
+  let { state } = useLocation();
+  if (!state) {
+    state = {};
+  }
+  let { email, password } = state;
+  // let navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: email || "",
+      password: password || "",
     },
     validate,
     onSubmit: (values) => {
@@ -23,6 +35,17 @@ function Login() {
       loginHandler(values);
     },
   });
+
+  useEffect(() => {
+    if (!tokenExists() && email && password) {
+      formik.submitForm();
+    }
+
+    // formik.setSubmitting(true);
+
+    //  { email, password } = state;
+  }, []);
+
   const loginHandler = async (values) => {
     let jsonBody = JSON.stringify({
       email: values.email,
@@ -38,11 +61,16 @@ function Login() {
       });
       console.log(response.ok);
       if (response.ok) {
-        let resp = await response.json();
-        console.log(resp);
-        localStorage.setItem("token", resp.token);
-        localStorage.setItem("name", resp.name);
-        console.log("test");
+        try {
+          let resp = await response.json();
+          console.log(resp);
+          localStorage.setItem("token", resp.token);
+          localStorage.setItem("name", resp.name);
+          navigate("/user");
+          // test();
+        } catch (error) {
+          console.log("login error", error);
+        }
       } else {
         // formik.errors = response.json();
         formik.setStatus(await response.json());

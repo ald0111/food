@@ -23,8 +23,8 @@ async function registerModel(Email, Name, Phonenumber, Password) {
     const salt = bcrypt.genSalt(10);
     connection.connect();
     const hash = await bcrypt.hash(Password, await salt);
-    let query = `INSERT INTO users VALUES (UUID_SHORT(), '${Email}', '${Name}', '${Phonenumber}', '${hash}', CURRENT_DATE())`;
-    await connection.query(query, (error, rows, fileds) => {
+    let query = `INSERT INTO users (userId, email, name, phonenumber, password, dateCreated) VALUES (UUID_SHORT(), '${Email}', '${Name}', '${Phonenumber}', '${hash}', CURRENT_DATE())`;
+    connection.query(query, (error, rows, fileds) => {
       if (error) {
         throw error;
       }

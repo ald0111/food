@@ -8,6 +8,8 @@ import {
   nameValidator,
 } from "../../functions/input/Validator";
 
+import { Redirect } from "../../functions/Token";
+
 const validate = (values) => {
   let errors = {};
 
@@ -20,6 +22,7 @@ const validate = (values) => {
 };
 
 export default function Register() {
+  Redirect();
   const formik = useFormik({
     initialValues: {
       email: "",
