@@ -8,7 +8,7 @@ export function Redirect(where = "/user", rev = true) {
   let navigate = useNavigate();
   // console.log(where, rev, tokenExists());
   useEffect(() => {
-    if (rev == tokenExists()) {
+    if (rev === tokenExists()) {
       console.log("blah");
       navigate(where);
     }

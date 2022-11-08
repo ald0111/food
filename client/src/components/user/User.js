@@ -1,6 +1,5 @@
-import { Outlet } from "react-router-dom";
 import "../../functions/Token";
-import tokenExists, { Redirect } from "../../functions/Token";
+import { Redirect } from "../../functions/Token";
 import Logout from "./Logout";
 function User() {
   Redirect("/user/login", false);

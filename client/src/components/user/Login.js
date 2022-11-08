@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { email, password } from "../../functions/input/Validator";
 import { Redirect } from "../../functions/Token";
 import { useEffect } from "react";
@@ -21,9 +21,6 @@ function Login(props) {
   if (!state) {
     state = {};
   }
-  let { email, password } = state;
-  // let navigate = useNavigate();
-
   const formik = useFormik({
     initialValues: {
       email: email || "",
@@ -35,8 +32,11 @@ function Login(props) {
       loginHandler(values);
     },
   });
+  // let navigate = useNavigate();
 
   useEffect(() => {
+    let { email, password } = state;
+
     if (!tokenExists() && email && password) {
       formik.submitForm();
     }
@@ -44,6 +44,7 @@ function Login(props) {
     // formik.setSubmitting(true);
 
     //  { email, password } = state;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loginHandler = async (values) => {
