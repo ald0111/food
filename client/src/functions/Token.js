@@ -1,26 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import LoggedInContext from "../components/LoggedInContext";
 export default function tokenExists() {
   return localStorage.token && localStorage.name ? true : false;
 }
 export function Redirect(where = "/user", rev = true) {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const [loggedIn] = useContext(LoggedInContext);
+
   // console.log(where, rev, tokenExists());
   useEffect(() => {
-    if (rev === tokenExists()) {
+    console.log(loggedIn);
+    if (rev === loggedIn) {
       console.log("blah");
       navigate(where);
     }
-  });
+  }, [navigate, loggedIn, rev, where]);
 }
-export function Logout() {
-  let navigate = useNavigate();
-  // console.log(where, rev, tokenExists());
-  const logout = () => {
-    localStorage.clear();
 
-    navigate("/user/login");
-  };
-  return <button onClick={logout}>Logout</button>;
-}
+//currently not used anywhere
