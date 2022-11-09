@@ -14,3 +14,13 @@ export function Redirect(where = "/user", rev = true) {
     }
   });
 }
+export function Logout() {
+  let navigate = useNavigate();
+  // console.log(where, rev, tokenExists());
+  const logout = () => {
+    localStorage.clear();
+
+    navigate("/user/login");
+  };
+  return <button onClick={logout}>Logout</button>;
+}

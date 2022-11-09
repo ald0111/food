@@ -9,7 +9,7 @@ import {
 } from "../../functions/input/Validator";
 
 import { Redirect } from "../../functions/Token";
-
+import { useNavigate } from "react-router-dom";
 const validate = (values) => {
   let errors = {};
 
@@ -23,6 +23,7 @@ const validate = (values) => {
 
 export default function Register() {
   Redirect();
+  let navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -56,6 +57,12 @@ export default function Register() {
       if (response.ok) {
         console.log("test");
         formik.setStatus({});
+        navigate("/user/login", {
+          state: {
+            email: formik.values.email,
+            password: formik.values.password,
+          },
+        });
       } else {
         // formik.errors = await response.json();
         // formik.touched.name = true;

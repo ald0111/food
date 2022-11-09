@@ -21,6 +21,7 @@ function Login(props) {
   if (!state) {
     state = {};
   }
+  let { email, password } = state;
   const formik = useFormik({
     initialValues: {
       email: email || "",
@@ -35,8 +36,6 @@ function Login(props) {
   // let navigate = useNavigate();
 
   useEffect(() => {
-    let { email, password } = state;
-
     if (!tokenExists() && email && password) {
       formik.submitForm();
     }

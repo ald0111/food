@@ -1,6 +1,6 @@
 import "../../functions/Token";
-import { Redirect } from "../../functions/Token";
-import Logout from "./Logout";
+import { Redirect, Logout } from "../../functions/Token";
+
 function User() {
   Redirect("/user/login", false);
   return (
