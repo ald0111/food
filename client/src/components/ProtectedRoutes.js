@@ -8,6 +8,7 @@ export default function ProtectedRoutes({ rev = true, children }) {
   const [loggedIn] = useContext(LoggedInContext);
   const navigate = useNavigate();
   useEffect(() => {
+    // console.log(loggedIn, rev);
     if (rev === !loggedIn) navigate(where);
     // console.log("from proteced routes");
   }, [loggedIn, navigate, rev, where]);

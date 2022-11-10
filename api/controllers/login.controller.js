@@ -11,7 +11,7 @@ const login = async (req, res) => {
     let resp = await loginModel(req.body.email, req.body.password);
     console.log(resp);
     const token = generateAccessToken({ resp });
-    res.send({ token: token, name: resp.name });
+    res.send({ token: token, name: resp.name, role: resp.role });
   } catch (error) {
     console.log(error);
     res.status(401).send(error);
