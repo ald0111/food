@@ -91,6 +91,7 @@ export default function Register() {
             placeholder="Email"
             name="email"
             id="email"
+            autoComplete="email"
           />
           {(formik.touched.email && formik.errors.email && (
             <>
@@ -114,6 +115,7 @@ export default function Register() {
             placeholder="Full Name"
             name="name"
             id="name"
+            autoComplete="name"
           />
           {formik.touched.name && formik.errors.name && (
             <>
@@ -132,6 +134,7 @@ export default function Register() {
             placeholder="Phonenumber"
             name="phonenumber"
             id="phonenumber"
+            autoComplete="off"
           />
           {(formik.touched.phonenumber && formik.errors.phonenumber && (
             <>
@@ -155,6 +158,7 @@ export default function Register() {
             placeholder="Passowrd"
             name="password"
             id="password"
+            autoComplete="new-password"
           />
           {formik.touched.password && formik.errors.password && (
             <>

@@ -75,6 +75,7 @@ function Login(props) {
           console.log(resp);
           localStorage.setItem("token", resp.token);
           localStorage.setItem("name", resp.name);
+          localStorage.setItem("role", resp.role);
           setLoggedIn(true);
           // navigate("/user");
           // test();
@@ -109,6 +110,7 @@ function Login(props) {
               placeholder="Email"
               name="email"
               id="email"
+              autoComplete="email"
             />
             {formik.touched.email && formik.errors.email && (
               <>
@@ -126,6 +128,7 @@ function Login(props) {
               placeholder="Passowrd"
               name="password"
               id="password"
+              autoComplete="current-password"
             />
             {formik.touched.password && formik.errors.password && (
               <>
