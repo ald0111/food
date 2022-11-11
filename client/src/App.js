@@ -1,8 +1,9 @@
 // import logo from "./logo.svg";
 import "./App.css";
 import UserRouter from "./components/user/user.router";
+import KitchenRouter from "./components/kitchen/kitchen.router";
 
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import LoggedInContext from "./components/LoggedInContext";
 import tokenExists from "./functions/Token";
@@ -25,7 +26,13 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Router>
-            <UserRouter />
+            <Routes>
+              <Route path="/user/*" element={<UserRouter />} />
+              <Route path="/kitchen/*" element={<KitchenRouter />} />
+            </Routes>
+
+            {/* <UserRouter />
+            <KitchenRouter /> */}
           </Router>
 
           {/* <Login /> */}

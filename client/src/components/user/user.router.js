@@ -6,10 +6,10 @@ import Test from "./Test";
 function UserRouter() {
   return (
     <Routes>
-      <Route path="/user" element={<User />} />
-      <Route path="/user/login" element={<Login />} />
-      <Route path="/user/register" element={<Register />} />
-      <Route path="/user/test" element={<Test />} />
+      <Route index element={<User />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/test" element={<Test />} />
     </Routes>
   );
 }
