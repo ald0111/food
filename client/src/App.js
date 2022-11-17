@@ -30,9 +30,10 @@ function App() {
               <Route path="/user/*" element={<UserRouter />} />
               <Route path="/kitchen/*" element={<KitchenRouter />} />
             </Routes>
-
-            {/* <UserRouter />
-            <KitchenRouter /> */}
+            {/* <Routes>
+              <UserRouter />
+              <KitchenRouter />
+            </Routes> */}
           </Router>
 
           {/* <Login /> */}

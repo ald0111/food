@@ -1,11 +1,12 @@
 import { useContext, useEffect } from "react";
 import LoggedInContext from "./LoggedInContext";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ProtectedRoutes({
   rev = true,
   children,
   role = "user",
+  everyone = false,
 }) {
   //   console.log(`this is ${rev}`);
   let where = rev ? "/user/login" : null;
@@ -25,10 +26,13 @@ export default function ProtectedRoutes({
     // console.log(loggedIn, rev);
     if (rev === !loggedIn) {
       navigate(where);
+    } else if (!(localStorage.role === role) && !everyone) {
+      navigate(where);
     }
     console.log(rev, where);
     // console.log("from proteced routes");
-  }, [loggedIn, navigate, rev, where]);
-  return !rev || localStorage.role === role ? children : null;
+  }, [loggedIn, navigate, rev, where, role]);
+  // return !rev || localStorage.role === role ? children : null;
+  return children;
   // let renders = localStorage.role === role ? children : null;
 }
