@@ -6,14 +6,20 @@ const userId = (userId, errors) => {
     errors.userId = "invalid userId";
   }
 };
+const checkRole = (role, errors) => {
+  if (!/^[a-z]{4,7}$/.test(role)) {
+    errors.role = "invalid role";
+  }
+};
 const config = require("../configs/db.config");
 
-async function checkUser(UserId, err = {}) {
+async function checkUser(UserId, Role, err = {}) {
   return new Promise(async (resolve, reject) => {
     const connection = mysql.createConnection(config);
     let errors = err;
 
     userId(UserId, errors);
+    checkRole(Role, errors);
 
     if (Object.keys(errors).length > 0) {
       console.log(errors);
@@ -22,7 +28,7 @@ async function checkUser(UserId, err = {}) {
 
     connection.connect();
 
-    let query = `SELECT userId FROM users WHERE userId ='${UserId}'`;
+    let query = `SELECT userId FROM users WHERE userId ='${UserId}' AND role ='${Role}'`;
     connection.query(query, (error, rows) => {
       if (error) {
         throw error;

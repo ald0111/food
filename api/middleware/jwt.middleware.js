@@ -12,7 +12,7 @@ function authenticateToken(req, res, next) {
     if (err) return res.sendStatus(403);
 
     try {
-      await checkUser(user.resp.userId);
+      await checkUser(user.resp.userId, user.resp.role);
     } catch (error) {
       if (error) console.log(error);
       return res.sendStatus(403);

@@ -1,0 +1,13 @@
+nav > ul {
+  list-style-type: none;
+}
+nav > ul > li {
+  display: inline;
+}
+.kitchenDiv {
+  margin-top: 10vh;
+  background-color: gray;
+}
+#addToMenu form > input {
+  display: block;
+}

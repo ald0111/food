@@ -31,7 +31,7 @@ export default function ProtectedRoutes({
     }
     console.log(rev, where);
     // console.log("from proteced routes");
-  }, [loggedIn, navigate, rev, where, role]);
+  }, [loggedIn, navigate, rev, where, role, everyone]);
   // return !rev || localStorage.role === role ? children : null;
   return children;
   // let renders = localStorage.role === role ? children : null;
