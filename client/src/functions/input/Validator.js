@@ -35,5 +35,18 @@ function nameValidator(name, errors) {
     errors.name = "Invalid name";
   }
 }
-
-module.exports = { email, nameValidator, password, phonenumber };
+function currencyValidator(currency, errors) {
+  console.log(currency);
+  if (!currency) {
+    errors.currency = "Required";
+  } else if (!/^[0-9]+(\.[0-9]{1,2})?$/.test(currency)) {
+    errors.currency = "Invalid currency";
+  }
+}
+module.exports = {
+  email,
+  nameValidator,
+  password,
+  phonenumber,
+  currencyValidator,
+};

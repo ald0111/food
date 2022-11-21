@@ -12,7 +12,7 @@ async function phonenumberModel(Email, err = {}) {
 
     if (Object.keys(errors).length > 0) {
       console.log(errors);
-      reject(errors);
+      return reject(errors);
     }
 
     connection.connect();

@@ -73,7 +73,7 @@ function AddMenu() {
   const addFoodHandler = (event) => {
     event.preventDefault();
     // console.log(event);
-    addMenuHandler(FoodName, Cost);
+    addMenuHandler({ foodName: FoodName, cost: Cost });
   };
   return (
     <section className="kitchenDiv" id="addToMenu">

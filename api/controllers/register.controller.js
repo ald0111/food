@@ -5,6 +5,16 @@ const phonenumberModel = require("../models/phonenumber.model");
 const register = async (req, res) => {
   //checks for availability
   let errors = {};
+  if (
+    !(
+      req.body.email &&
+      req.body.name &&
+      req.body.phonenumber &&
+      req.body.password
+    )
+  ) {
+    errors.error = "Mandatory fields are required.";
+  }
   try {
     await emailModel(req.body.email);
   } catch (error) {
