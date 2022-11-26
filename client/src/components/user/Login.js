@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { email, password } from "../../functions/input/Validator";
 
 import { useEffect, useContext } from "react";
@@ -17,6 +17,7 @@ const validate = (values) => {
 };
 
 function Login(props) {
+  const navigate = useNavigate();
   // Redirect();
   //login context
   const [loggedIn, setLoggedIn] = useContext(LoggedInContext);
@@ -76,8 +77,8 @@ function Login(props) {
           localStorage.setItem("token", resp.token);
           localStorage.setItem("name", resp.name);
           localStorage.setItem("role", resp.role);
+          navigate("/user");
           setLoggedIn(true);
-          // navigate("/user");
           // test();
         } catch (error) {
           console.log("login error", error);

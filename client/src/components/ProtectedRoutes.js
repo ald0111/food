@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import LoggedInContext from "./LoggedInContext";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ export default function ProtectedRoutes({
   role = "user",
   everyone = false,
 }) {
+  const [CanRender, setCanRender] = useState(false);
   //   console.log(`this is ${rev}`);
   let where = rev ? "/user/login" : null;
   const [loggedIn] = useContext(LoggedInContext);
@@ -22,17 +23,32 @@ export default function ProtectedRoutes({
     }
   }
   const navigate = useNavigate();
+  // function sleep(ms) {
+  //   return new Promise((resolve) => setTimeout(resolve, ms));
+  // }
   useEffect(() => {
-    // console.log(loggedIn, rev);
-    if (rev === !loggedIn) {
-      navigate(where);
-    } else if (!(localStorage.role === role) && !everyone) {
-      navigate(where);
-    }
-    console.log(rev, where);
-    // console.log("from proteced routes");
+    (async () => {
+      // console.log("Hello Toturix");
+      // await sleep(3000);
+      // console.log("good");
+      if (rev === !loggedIn) {
+        navigate(where);
+        console.log(rev, where);
+      } else if (!(localStorage.role === role) && !everyone) {
+        navigate(where);
+        console.log(rev, where);
+      }
+      setCanRender(true);
+      // console.log(loggedIn, rev);
+      // console.log("from proteced routes");
+    })();
   }, [loggedIn, navigate, rev, where, role, everyone]);
   // return !rev || localStorage.role === role ? children : null;
-  return children;
+  if (CanRender) {
+    return children;
+  } else {
+    return null;
+  }
+
   // let renders = localStorage.role === role ? children : null;
 }
