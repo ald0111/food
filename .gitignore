@@ -1,3 +1,5 @@
 /node_modules
 /api/configs
 /api/.env
+
+/api/test.js

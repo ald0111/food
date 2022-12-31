@@ -1,7 +1,8 @@
 // /api/kitchen/addToMenu
 
-const addMenuModel = require("../models/addMenu.model");
-const foodNameModel = require("../models/foodName.models");
+const addMenuModel = require("../../models/kitchen/addMenu.model");
+const foodNameModel = require("../../models/kitchen/foodName.models");
+
 async function addToMenu(req, res) {
   let errors = {};
   if (!(req.body.foodName && req.body.cost)) {

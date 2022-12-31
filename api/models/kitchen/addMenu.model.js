@@ -3,8 +3,8 @@ const mysql = require("mysql");
 const {
   nameValidator,
   currencyValidator,
-} = require("../../client/src/functions/input/Validator");
-const config = require("../configs/db.config");
+} = require("../../../client/src/functions/input/Validator");
+const config = require("../../configs/db.config");
 
 async function addMenuModel(FoodName, Cost) {
   return new Promise(async (resolve, reject) => {

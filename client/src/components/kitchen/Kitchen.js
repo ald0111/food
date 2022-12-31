@@ -1,6 +1,6 @@
 import { Logout } from "../user/Logout";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import "./Kitchen.css";
 
@@ -104,6 +104,37 @@ function AddMenu() {
 }
 
 function UpdateMenu() {
+  const getMenu = async () => {
+    try {
+      let response = await fetch("/api/kitchen/menu", {
+        method: "get",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.ok);
+      if (response.ok) {
+        try {
+          let resp = await response.json();
+          console.log(resp);
+
+          // test();
+        } catch (error) {
+          console.log("add menu error", error);
+        }
+      } else {
+        // formik.errors = response.json();
+        console.log("api getMenu failed");
+        // console.log(await response.json());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getMenu();
+  }, []);
   return (
     <section className="kitchenDiv" id="addToMenu">
       Welcome to Update menu

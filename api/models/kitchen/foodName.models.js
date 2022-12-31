@@ -1,7 +1,9 @@
 const mysql = require("mysql");
 
-const { nameValidator } = require("../../client/src/functions/input/Validator");
-const config = require("../configs/db.config");
+const {
+  nameValidator,
+} = require("../../../client/src/functions/input/Validator");
+const config = require("../../configs/db.config");
 
 async function foodNameModel(FoodName, err = {}) {
   return new Promise(async (resolve, reject) => {
@@ -23,7 +25,7 @@ async function foodNameModel(FoodName, err = {}) {
         throw error;
       }
       if (rows.length > 0) {
-        errors.email = "food exists";
+        errors.exists = "food exists";
         reject(errors);
       } else {
         resolve(true);
