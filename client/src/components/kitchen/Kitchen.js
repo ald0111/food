@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import "./Kitchen.css";
 
+import { nameValidator } from "../../functions/input/Validator";
+import { currencyValidator } from "../../functions/input/Validator";
+
 export default function Kitchen() {
   //   const
 
@@ -72,7 +75,14 @@ function AddMenu() {
   };
   const addFoodHandler = (event) => {
     event.preventDefault();
-    // console.log(event);
+    console.log(event);
+    let errors = {};
+    nameValidator(FoodName, errors);
+    currencyValidator(Cost, errors);
+    if (Object.keys(errors).length > 0) {
+      console.log("Invalid foodname or currency entry");
+      return;
+    }
     addMenuHandler({ foodName: FoodName, cost: Cost });
   };
   return (
