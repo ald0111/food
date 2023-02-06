@@ -7,6 +7,8 @@ import { useEffect, useContext } from "react";
 import LoggedInContext from "../LoggedInContext";
 import ProtectedRoutes from "../ProtectedRoutes";
 
+import { Button, TextField } from "@mui/material";
+
 const validate = (values) => {
   let errors = {};
 
@@ -103,12 +105,12 @@ function Login(props) {
         >
           {formik.status && <span>{formik.status.error}</span>}
           <div>
-            <input
+            <TextField
               type="email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
-              placeholder="Email"
+              label="Email"
               name="email"
               id="email"
               autoComplete="email"
@@ -121,7 +123,17 @@ function Login(props) {
             )}
           </div>
           <div>
-            <input
+            <TextField
+              type="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              label="Passowrd"
+              name="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            {/* <input
               type="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -130,7 +142,7 @@ function Login(props) {
               name="password"
               id="password"
               autoComplete="current-password"
-            />
+            /> */}
             {formik.touched.password && formik.errors.password && (
               <>
                 <br></br>
@@ -139,7 +151,10 @@ function Login(props) {
             )}
           </div>
           <div>
-            <input type="submit" value="Login" />
+            <Button variant="contained" type="submit">
+              Hello World
+            </Button>
+            {/* <input type="submit" value="Login" /> */}
           </div>
         </form>
         <div>
