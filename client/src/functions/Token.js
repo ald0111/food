@@ -11,7 +11,7 @@ export function Redirect(where = "/user", rev = true) {
   // console.log(where, rev, tokenExists());
   useEffect(() => {
     console.log(loggedIn);
-    if (rev === loggedIn) {
+    if (rev === loggedIn.value) {
       console.log("blah");
       navigate(where);
     }

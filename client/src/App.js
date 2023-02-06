@@ -10,13 +10,16 @@ import tokenExists from "./functions/Token";
 // import { Routes, Route } from "react-router-dom";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(tokenExists());
+  const [loggedIn, setLoggedIn] = useState({
+    value: tokenExists(),
+    afterLogin: null,
+  });
   useEffect(() => {
     window.addEventListener("storage", () => {
       if (tokenExists()) {
-        setLoggedIn(true);
+        setLoggedIn({ value: true });
       } else {
-        setLoggedIn(false);
+        setLoggedIn({ value: false });
       }
     });
   }, []);

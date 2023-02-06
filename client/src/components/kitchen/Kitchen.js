@@ -1,9 +1,9 @@
 import { Logout } from "../user/Logout";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import "./Kitchen.css";
-
+import LoggedInContext from "../LoggedInContext";
 import { nameValidator } from "../../functions/input/Validator";
 import { currencyValidator } from "../../functions/input/Validator";
 
@@ -14,7 +14,25 @@ export default function Kitchen() {
   //   useEffect(() => {
   //     console.log("i'm good");
   //   }, [whichSection]);
+
+  const ws = useRef();
   const [orderCount, setOrderCount] = useState(0);
+
+  useEffect(() => {
+    ws.current = new WebSocket("ws://localhost:8000/ws");
+    ws.current.onopen = () => {
+      console.log("Connected");
+    };
+    ws.current.onmessage = (evt) => {
+      // listen to data sent from the websocket server
+      const message = evt.data; //JSON.parse(evt.data);
+      console.log(message);
+    };
+
+    return () => {
+      ws.current.close();
+    };
+  }, []);
 
   return (
     <div>
@@ -39,7 +57,13 @@ export default function Kitchen() {
 function AddMenu() {
   const [FoodName, setFoodName] = useState("");
   const [Cost, setCost] = useState("");
-
+  const [Error, setError] = useState({ color: "red", error: "" });
+  // const navigate = useNavigate();
+  const [, setLoggedIn] = useContext(LoggedInContext);
+  const logout = () => {
+    localStorage.clear();
+    setLoggedIn({ value: false, afterLogin: "/kitchen/add" });
+  };
   const addMenuHandler = async (values) => {
     let jsonBody = JSON.stringify({
       foodName: values.foodName,
@@ -59,15 +83,21 @@ function AddMenu() {
         try {
           let resp = await response.json();
           console.log(resp);
+          setError({ color: "green", error: "Success!" });
 
           // test();
         } catch (error) {
           console.log("add menu error", error);
         }
+      } else if (response.status === 403) {
+        logout();
       } else {
         // formik.errors = response.json();
         console.log("api put failed");
         // console.log(await response.json());
+        let errorObj = await response.json();
+
+        setError({ color: "red", error: Object.values(errorObj)[0] });
       }
     } catch (error) {
       console.log(error);
@@ -81,6 +111,7 @@ function AddMenu() {
     currencyValidator(Cost, errors);
     if (Object.keys(errors).length > 0) {
       console.log("Invalid foodname or currency entry");
+      setError({ color: "red", error: Object.values(errors)[0] });
       return;
     }
     addMenuHandler({ foodName: FoodName, cost: Cost });
@@ -89,6 +120,7 @@ function AddMenu() {
     <section className="kitchenDiv" id="addToMenu">
       <span>Welcome to AddMenu</span>
       <center>
+        <span style={{ color: Error.color }}>{Error.error}</span>
         <form action="" onSubmit={addFoodHandler}>
           <input
             type="text"

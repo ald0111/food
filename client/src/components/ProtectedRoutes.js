@@ -12,7 +12,7 @@ export default function ProtectedRoutes({
   //   console.log(`this is ${rev}`);
   let where = rev ? "/user/login" : null;
   const [loggedIn] = useContext(LoggedInContext);
-  if (!where && loggedIn) {
+  if (!where && loggedIn.value) {
     switch (localStorage.role) {
       case "kitchen":
         where = "/kitchen";
@@ -31,7 +31,7 @@ export default function ProtectedRoutes({
       // console.log("Hello Toturix");
       // await sleep(3000);
       // console.log("good");
-      if (rev === !loggedIn) {
+      if (rev === !loggedIn.value) {
         navigate(where);
         console.log(rev, where);
       } else if (!(localStorage.role === role) && !everyone) {
@@ -39,10 +39,10 @@ export default function ProtectedRoutes({
         console.log(rev, where);
       }
       setCanRender(true);
-      // console.log(loggedIn, rev);
+      // console.log(loggedIn.value, rev);
       // console.log("from proteced routes");
     })();
-  }, [loggedIn, navigate, rev, where, role, everyone]);
+  }, [loggedIn.value, navigate, rev, where, role, everyone]);
   // return !rev || localStorage.role === role ? children : null;
   if (CanRender) {
     return children;

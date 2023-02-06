@@ -48,7 +48,7 @@ function Login(props) {
 
   //runs when component renders for the first time
   useEffect(() => {
-    if (!loggedIn && email && password) {
+    if (!loggedIn.value && email && password) {
       formik.submitForm();
     }
 
@@ -79,8 +79,8 @@ function Login(props) {
           localStorage.setItem("token", resp.token);
           localStorage.setItem("name", resp.name);
           localStorage.setItem("role", resp.role);
-          navigate("/user");
-          setLoggedIn(true);
+          navigate(loggedIn.afterLogin);
+          setLoggedIn({ value: true });
           // test();
         } catch (error) {
           console.log("login error", error);
