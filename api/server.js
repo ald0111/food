@@ -1,5 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const addWsToServer = require("./webSocket");
+
 class Server {
   constructor() {
     dotenv.config();
@@ -34,9 +36,10 @@ class Server {
   }
 
   listen() {
-    return this.app.listen(this.port, () => {
+    const server = this.app.listen(this.port, () => {
       console.log("Server running on port: ", this.port);
     });
+    addWsToServer(server);
   }
 }
 

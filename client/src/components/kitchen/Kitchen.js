@@ -16,6 +16,7 @@ export default function Kitchen() {
   //   }, [whichSection]);
 
   const ws = useRef();
+  const [RTdata, setRTdata] = useState({});
   const [orderCount, setOrderCount] = useState(0);
 
   useEffect(() => {
@@ -25,14 +26,21 @@ export default function Kitchen() {
     };
     ws.current.onmessage = (evt) => {
       // listen to data sent from the websocket server
-      const message = evt.data; //JSON.parse(evt.data);
-      console.log(message);
+      const message = JSON.parse(evt.data);
+      setRTdata({ data: message });
+      // console.log(message);
     };
 
     return () => {
       ws.current.close();
     };
   }, []);
+
+  useEffect(() => {
+    if (ws.current.readyState === 1) {
+      ws.current.send(orderCount);
+    }
+  }, [orderCount]);
 
   return (
     <div>
@@ -46,7 +54,7 @@ export default function Kitchen() {
         <Route path="/update" element={<UpdateMenu />} />
         <Route
           path="/orders"
-          element={<Orders setOrderCount={setOrderCount} />}
+          element={<Orders setOrderCount={setOrderCount} wsData={RTdata} />}
         />
       </Routes>
     </div>
@@ -184,7 +192,7 @@ function UpdateMenu() {
   );
 }
 
-function Orders({ setOrderCount }) {
+function Orders({ setOrderCount, wsData }) {
   return (
     <>
       <section className="kitchenDiv" id="addToMenu">
@@ -199,11 +207,17 @@ function Orders({ setOrderCount }) {
       </button>
       <button
         onClick={() => {
-          setOrderCount((count) => count - 1);
+          setOrderCount((count) => {
+            if (count > 0) {
+              return count - 1;
+            }
+            return 0;
+          });
         }}
       >
         subtract
       </button>
+      <span>{wsData?.data}</span>
     </>
   );
 }
