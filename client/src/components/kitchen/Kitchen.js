@@ -20,7 +20,7 @@ export default function Kitchen() {
   const [orderCount, setOrderCount] = useState(0);
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://localhost:8000/ws");
+    ws.current = new WebSocket("ws://192.168.101.100:8000/ws");
     ws.current.onopen = () => {
       console.log("Connected");
     };
