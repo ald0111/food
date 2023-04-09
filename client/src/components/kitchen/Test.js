@@ -1,9 +1,15 @@
 import ProtectedRoutes from "../ProtectedRoutes";
-
+import TestTwo from "./test2";
+import { useEffect, useState } from "react";
 export default function TestKitchen() {
+  const [popup, setPopup] = useState(false);
+  useEffect(() => {
+    console.log("helo its working!");
+  }, [popup]);
   return (
-    <ProtectedRoutes role="kitchen">
+    <>
       <h1>Hola! Kitchen</h1>
-    </ProtectedRoutes>
+      <TestTwo open={popup} setOpen={setPopup} />
+    </>
   );
 }

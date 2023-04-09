@@ -7,6 +7,8 @@ import LoggedInContext from "../LoggedInContext";
 import { nameValidator } from "../../functions/input/Validator";
 import { currencyValidator } from "../../functions/input/Validator";
 
+import TestKitchen from "./Test";
+
 export default function Kitchen() {
   //   const
 
@@ -52,6 +54,8 @@ export default function Kitchen() {
       <Routes>
         <Route path="/add" element={<AddMenu />} />
         <Route path="/update" element={<UpdateMenu />} />
+        <Route path="/test" element={<TestKitchen />} />
+
         <Route
           path="/orders"
           element={<Orders setOrderCount={setOrderCount} wsData={RTdata} />}
