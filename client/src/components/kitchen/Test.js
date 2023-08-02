@@ -1,4 +1,3 @@
-import ProtectedRoutes from "../ProtectedRoutes";
 import TestTwo from "./test2";
 import { useEffect, useState } from "react";
 export default function TestKitchen() {
