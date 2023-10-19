@@ -12,11 +12,13 @@ const {
   updateQuantity,
 } = require("../controllers/kitchen/updateQuantity.controller");
 const { placeOrder } = require("../controllers/kitchen/placeOrder.controller");
+const { viewOrders } = require("../controllers/kitchen/viewOrder.controller");
 
 //Routes
 router.put("/addToMenu", authenticateToken, kitchenRole, addToMenu);
 router.get("/menu", authenticateToken, getMenu);
 router.put("/updateQuantity", authenticateToken, kitchenRole, updateQuantity);
 router.post("/placeOrder", authenticateToken, placeOrder);
+router.get("/viewOrders", authenticateToken, kitchenRole, viewOrders);
 
 module.exports = router;

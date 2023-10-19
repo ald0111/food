@@ -273,8 +273,63 @@ function UpdateMenu() {
     </>
   );
 }
-
+const Food = ({ foods }) => {
+  const foodParsed = JSON.parse(foods["order_data"]);
+  console.log(foodParsed);
+  return (
+    <table>
+      <tbody>
+        {Object.entries(foodParsed).map(([id, food]) => (
+          <tr key={id + "food"}>
+            <td>{String(food["FoodName"])}</td>
+            <td>{String(food["Cost"])}</td>
+            <td>{String(food["Quantity"])}</td>
+            <td>{String(food["Cost"] * food["Quantity"])}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
 function Orders({ setOrderCount, wsData }) {
+  const [orders, setOrders] = useState([]);
+  const getOrders = async () => {
+    try {
+      let response = await fetch("/api/kitchen/viewOrders", {
+        method: "get",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.ok);
+      if (response.ok) {
+        try {
+          let resp = await response.json();
+          console.log(resp);
+          setOrders(resp);
+
+          // test();
+        } catch (error) {
+          console.log("add menu error", error);
+        }
+      } else {
+        // formik.errors = response.json();
+        console.log("api getOrders failed");
+        // console.log(await response.json());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getOrders();
+  }, []);
+  const acceptOrderHandler = async (e) => {
+    console.log(JSON.parse(orders[0]["order_data"]));
+
+    console.log("ok done");
+  };
   return (
     <>
       <section className="kitchenDiv" id="addToMenu">
@@ -300,6 +355,41 @@ function Orders({ setOrderCount, wsData }) {
         subtract
       </button>
       <span>{wsData?.data}</span>
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Order</th>
+            <th>Status</th>
+            <th>Name</th>
+            <th>Phonenumber</th>
+            <th>Accept</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders.map((order, id) => (
+            <tr key={id}>
+              <td>{order["id"]}</td>
+              <td>
+                <Food foods={order} />
+              </td>
+              <td>{order["status"]}</td>
+              <td>{order["name"] ? order["name"] : "Not available"}</td>
+              <td>{order["phonenumber"]}</td>
+              <td>
+                <button
+                  id={id + "buttonOrder"}
+                  onClick={(e) => {
+                    acceptOrderHandler(e);
+                  }}
+                >
+                  Accept
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }
