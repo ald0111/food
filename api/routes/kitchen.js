@@ -7,10 +7,16 @@ const kitchenRole = require("../middleware/kitchen.middleware");
 
 //Controllers
 const { addToMenu } = require("../controllers/kitchen/addMenu.controller");
-const menu = require("../controllers/kitchen/menu.controller");
+const { getMenu } = require("../controllers/kitchen/menu.controller");
+const {
+  updateQuantity,
+} = require("../controllers/kitchen/updateQuantity.controller");
+const { placeOrder } = require("../controllers/kitchen/placeOrder.controller");
 
 //Routes
 router.put("/addToMenu", authenticateToken, kitchenRole, addToMenu);
-router.get("/menu", authenticateToken, kitchenRole, menu);
+router.get("/menu", authenticateToken, getMenu);
+router.put("/updateQuantity", authenticateToken, kitchenRole, updateQuantity);
+router.post("/placeOrder", authenticateToken, placeOrder);
 
 module.exports = router;

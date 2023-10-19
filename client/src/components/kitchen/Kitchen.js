@@ -158,6 +158,7 @@ function AddMenu() {
 }
 
 function UpdateMenu() {
+  const [foods, setFoods] = useState([]);
   const getMenu = async () => {
     try {
       let response = await fetch("/api/kitchen/menu", {
@@ -172,6 +173,7 @@ function UpdateMenu() {
         try {
           let resp = await response.json();
           console.log(resp);
+          setFoods(resp);
 
           // test();
         } catch (error) {
@@ -189,10 +191,86 @@ function UpdateMenu() {
   useEffect(() => {
     getMenu();
   }, []);
+  function extractNumber(input) {
+    // Use regular expression to match numeric characters at the beginning of the string
+    const match = input.match(/^\d+/);
+
+    // If a match is found, convert it to a number and return, otherwise return null
+    return match ? parseInt(match[0], 10) : null;
+  }
+  const updateMenuHandler = async (e) => {
+    let val = document.getElementById(
+      extractNumber(e.target.id) + "value"
+    ).value;
+    console.log(val);
+    let jsonBody = JSON.stringify({
+      foodName: foods[extractNumber(e.target.id)]["FoodName"],
+      quantity: val,
+    });
+    try {
+      let response = await fetch("/api/kitchen/updateQuantity", {
+        method: "put",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+          "Content-Type": "application/json",
+        },
+        body: jsonBody,
+      });
+      console.log(response.ok);
+      if (response.ok) {
+        try {
+          let resp = await response.json();
+          console.log(resp);
+          getMenu();
+        } catch (error) {
+          console.log("update menu error", error);
+        }
+      } else {
+        console.log("api updateMenu failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <section className="kitchenDiv" id="addToMenu">
-      Welcome to Update menu
-    </section>
+    <>
+      <section className="kitchenDiv" id="addToMenu">
+        Welcome to Update menu
+      </section>
+      <table>
+        <thead>
+          <tr>
+            <th>FoodName</th>
+            <th>Cost</th>
+            <th>Quantity</th>
+            <th>Change Quantity</th>
+            <th>Apply</th>
+          </tr>
+        </thead>
+        <tbody>
+          {foods.map((food, id) => (
+            <tr key={id}>
+              <td>{food["FoodName"]}</td>
+              <td>{food["Cost"]}</td>
+              <td>{food["Quantity"]}</td>
+              <td>
+                <input type="text" id={id + "value"} />
+              </td>
+              <td>
+                <button
+                  id={id + "button"}
+                  onClick={(e) => {
+                    updateMenuHandler(e);
+                  }}
+                >
+                  Apply
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 }
 
