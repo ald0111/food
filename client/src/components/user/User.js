@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import ProtectedRoutes from "../ProtectedRoutes";
 import Verify from "../kitchen/Verify";
 import { Logout } from "./Logout";
+import "./style1.css";
+import "./style2.css";
+import { TextField, Button } from "@mui/material";
 
 const PlaceOrder = ({ cart, getMenu, setCart }) => {
   const placeOrder = async () => {
@@ -36,7 +39,12 @@ const PlaceOrder = ({ cart, getMenu, setCart }) => {
       console.log(error);
     }
   };
-  return <button onClick={placeOrder}>Place Order</button>;
+
+  return (
+    <Button variant="contained" onClick={placeOrder}>
+      Place Order
+    </Button>
+  );
 };
 
 function User() {
@@ -129,7 +137,8 @@ function User() {
                   <td>{food["Cost"]}</td>
                   <td>{food["Quantity"]}</td>
                   <td>
-                    <input
+                    <TextField
+                      className="textInput"
                       id={id + "input"}
                       type="number"
                       min="0"
@@ -138,14 +147,15 @@ function User() {
                     />
                   </td>
                   <td>
-                    <button
+                    <Button
                       id={id + "button"}
+                      variant="contained"
                       onClick={(e) => {
                         addToCart(e);
                       }}
                     >
                       Apply
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               ) : null
@@ -179,15 +189,21 @@ function User() {
   }
   return (
     <ProtectedRoutes>
-      <h1>HII! {localStorage.name}</h1>
-      <Logout />
-      <h1>Yello!</h1>
-      <button onClick={viewOrders}>View Orders</button>
-      <button onClick={viewMenu}>Place Orders</button>
-      <Routes>
-        <Route index element={<MenuPlace />} />
-        <Route path="/orders" element={<ViewOrders />} />
-      </Routes>
+      <center>
+        <h1>HII! {localStorage.name}</h1>
+        <Logout />
+        <h1>Yello!</h1>
+        <Button variant="contained" onClick={viewOrders}>
+          View Orders
+        </Button>
+        <Button className="margin-left" variant="contained" onClick={viewMenu}>
+          Place Orders
+        </Button>
+        <Routes>
+          <Route index element={<MenuPlace />} />
+          <Route path="/orders" element={<ViewOrders />} />
+        </Routes>
+      </center>
     </ProtectedRoutes>
   );
 }

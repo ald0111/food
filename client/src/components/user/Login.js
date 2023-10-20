@@ -98,7 +98,7 @@ function Login(props) {
     <ProtectedRoutes rev={false}>
       <center>
         <div className="form-container">
-          <h2>Login</h2>
+          <h2 className="color-black">Login</h2>
 
           <form
             onSubmit={formik.handleSubmit}
@@ -154,7 +154,7 @@ function Login(props) {
             </div>
             <div className="margin-top">
               <Button variant="contained" type="submit">
-                Hello World
+                Login
               </Button>
               {/* <input type="submit" value="Login" /> */}
             </div>
