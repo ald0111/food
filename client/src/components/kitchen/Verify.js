@@ -21,6 +21,24 @@ const Food = (inps) => {
     </table>
   );
 };
+function CompleteOrder({ token, fn }) {
+  const completeHandler = () => {
+    console.log(token);
+    fetch(`/api/kitchen/complete/${token}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("cool");
+        fn();
+      });
+  };
+  return <button onClick={completeHandler}>Complete Order</button>;
+}
 function Verify() {
   const { token } = useParams();
   const [order, setOrder] = useState({
@@ -30,7 +48,7 @@ function Verify() {
     name: null,
     phonenumber: null,
   });
-  useEffect(() => {
+  const fetchOrder = async () => {
     fetch(`/api/kitchen/verify/${token}`, {
       method: "GET",
       headers: {
@@ -43,6 +61,9 @@ function Verify() {
         console.log(data[0]);
         setOrder(data[0]);
       });
+  };
+  useEffect(() => {
+    fetchOrder();
   }, [token]);
   return (
     <>
@@ -67,6 +88,12 @@ function Verify() {
           </tr>
         </tbody>
       </table>
+      <CompleteOrder
+        token={token}
+        fn={() => {
+          setOrder((prev) => ({ ...prev, status: "completed" }));
+        }}
+      />
     </>
   );
 }

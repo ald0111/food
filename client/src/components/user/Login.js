@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { email, password } from "../../functions/input/Validator";
-
+import "./style1.css";
 import { useEffect, useContext } from "react";
 
 import LoggedInContext from "../LoggedInContext";
@@ -97,43 +97,45 @@ function Login(props) {
   return (
     <ProtectedRoutes rev={false}>
       <center>
-        <h2>Login</h2>
-        <form
-          onSubmit={formik.handleSubmit}
-          action="/api/user/login"
-          method="post"
-        >
-          {formik.status && <span>{formik.status.error}</span>}
-          <div>
-            <TextField
-              type="email"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
-              label="Email"
-              name="email"
-              id="email"
-              autoComplete="email"
-            />
-            {formik.touched.email && formik.errors.email && (
-              <>
-                <br></br>
-                <span>{formik.errors.email}</span>
-              </>
-            )}
-          </div>
-          <div>
-            <TextField
-              type="password"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
-              label="Passowrd"
-              name="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            {/* <input
+        <div className="form-container">
+          <h2>Login</h2>
+
+          <form
+            onSubmit={formik.handleSubmit}
+            action="/api/user/login"
+            method="post"
+          >
+            {formik.status && <span>{formik.status.error}</span>}
+            <div>
+              <TextField
+                type="email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                label="Email"
+                name="email"
+                id="email"
+                autoComplete="email"
+              />
+              {formik.touched.email && formik.errors.email && (
+                <>
+                  <br></br>
+                  <span>{formik.errors.email}</span>
+                </>
+              )}
+            </div>
+            <div className="margin-top">
+              <TextField
+                type="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                label="Passowrd"
+                name="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              {/* <input
               type="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -143,22 +145,23 @@ function Login(props) {
               id="password"
               autoComplete="current-password"
             /> */}
-            {formik.touched.password && formik.errors.password && (
-              <>
-                <br></br>
-                <span>{formik.errors.password}</span>
-              </>
-            )}
-          </div>
+              {formik.touched.password && formik.errors.password && (
+                <>
+                  <br></br>
+                  <span>{formik.errors.password}</span>
+                </>
+              )}
+            </div>
+            <div className="margin-top">
+              <Button variant="contained" type="submit">
+                Hello World
+              </Button>
+              {/* <input type="submit" value="Login" /> */}
+            </div>
+          </form>
           <div>
-            <Button variant="contained" type="submit">
-              Hello World
-            </Button>
-            {/* <input type="submit" value="Login" /> */}
+            <Link to="/user/register">Register here</Link>
           </div>
-        </form>
-        <div>
-          <Link to="/user/register">Register here</Link>
         </div>
       </center>
     </ProtectedRoutes>

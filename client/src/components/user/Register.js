@@ -1,12 +1,13 @@
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
-
+import "./style1.css";
 import {
   email,
   password,
   phonenumber,
   nameValidator,
 } from "../../functions/input/Validator";
+import { Button, TextField } from "@mui/material";
 
 import { Redirect } from "../../functions/Token";
 import { useNavigate } from "react-router-dom";
@@ -76,102 +77,106 @@ export default function Register() {
   };
   return (
     <center>
-      <h2>Login</h2>
-      <form
-        onSubmit={formik.handleSubmit}
-        action="/api/user/register"
-        method="post"
-      >
-        <div>
-          <input
-            type="email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            placeholder="Email"
-            name="email"
-            id="email"
-            autoComplete="email"
-          />
-          {(formik.touched.email && formik.errors.email && (
-            <>
-              <br></br>
-              <span>{formik.errors.email}</span>
-            </>
-          )) ||
-            (formik.status && (
+      <div className="form-container">
+        <h2>Login</h2>
+        <form
+          onSubmit={formik.handleSubmit}
+          action="/api/user/register"
+          method="post"
+        >
+          <div>
+            <TextField
+              type="email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              placeholder="Email"
+              name="email"
+              id="email"
+              autoComplete="email"
+            />
+            {(formik.touched.email && formik.errors.email && (
               <>
                 <br></br>
-                <span>{formik.status.email}</span>
+                <span>{formik.errors.email}</span>
               </>
-            ))}
-        </div>
-        <div>
-          <input
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.name}
-            placeholder="Full Name"
-            name="name"
-            id="name"
-            autoComplete="name"
-          />
-          {formik.touched.name && formik.errors.name && (
-            <>
-              <br></br>
-              <span>{formik.errors.name}</span>
-            </>
-          )}
-        </div>
+            )) ||
+              (formik.status && (
+                <>
+                  <br></br>
+                  <span>{formik.status.email}</span>
+                </>
+              ))}
+          </div>
+          <div className="margin-top">
+            <TextField
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.name}
+              placeholder="Full Name"
+              name="name"
+              id="name"
+              autoComplete="name"
+            />
+            {formik.touched.name && formik.errors.name && (
+              <>
+                <br></br>
+                <span>{formik.errors.name}</span>
+              </>
+            )}
+          </div>
 
-        <div>
-          <input
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.phonenumber}
-            placeholder="Phonenumber"
-            name="phonenumber"
-            id="phonenumber"
-            autoComplete="off"
-          />
-          {(formik.touched.phonenumber && formik.errors.phonenumber && (
-            <>
-              <br></br>
-              <span>{formik.errors.phonenumber}</span>
-            </>
-          )) ||
-            (formik.status && (
+          <div className="margin-top">
+            <TextField
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.phonenumber}
+              placeholder="Phonenumber"
+              name="phonenumber"
+              id="phonenumber"
+              autoComplete="off"
+            />
+            {(formik.touched.phonenumber && formik.errors.phonenumber && (
               <>
                 <br></br>
-                <span>{formik.status.phonenumber}</span>
+                <span>{formik.errors.phonenumber}</span>
               </>
-            ))}
-        </div>
-        <div>
-          <input
-            type="password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-            placeholder="Passowrd"
-            name="password"
-            id="password"
-            autoComplete="new-password"
-          />
-          {formik.touched.password && formik.errors.password && (
-            <>
-              <br></br>
-              <span>{formik.errors.password}</span>
-            </>
-          )}
-        </div>
-        <div>
-          <input type="submit" value="Register" />
-        </div>
-      </form>
-      <Link to="/user/login">Login here</Link>
+            )) ||
+              (formik.status && (
+                <>
+                  <br></br>
+                  <span>{formik.status.phonenumber}</span>
+                </>
+              ))}
+          </div>
+          <div className="margin-top">
+            <TextField
+              type="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              placeholder="Passowrd"
+              name="password"
+              id="password"
+              autoComplete="new-password"
+            />
+            {formik.touched.password && formik.errors.password && (
+              <>
+                <br></br>
+                <span>{formik.errors.password}</span>
+              </>
+            )}
+          </div>
+          <div className="margin-top">
+            <Button type="submit" variant="contained">
+              Register
+            </Button>
+          </div>
+        </form>
+        <Link to="/user/login">Login here</Link>
+      </div>
     </center>
   );
 }
