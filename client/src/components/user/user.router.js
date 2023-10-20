@@ -7,7 +7,7 @@ import Test from "./Test";
 function UserRouter() {
   return (
     <Routes>
-      <Route index element={<User />} />
+      <Route path="/*" element={<User />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/logout" element={<Logout />} />

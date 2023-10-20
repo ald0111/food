@@ -3,6 +3,7 @@ import { Logout } from "../user/Logout";
 import { useState, useEffect, useContext, useRef } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import "./Kitchen.css";
+import Verify from "./Verify";
 import LoggedInContext from "../LoggedInContext";
 import { nameValidator } from "../../functions/input/Validator";
 import { currencyValidator } from "../../functions/input/Validator";
@@ -55,7 +56,7 @@ export default function Kitchen() {
         <Route path="/add" element={<AddMenu />} />
         <Route path="/update" element={<UpdateMenu />} />
         <Route path="/test" element={<TestKitchen />} />
-
+        <Route path="/verify/:token" element={<Verify />} />
         <Route
           path="/orders"
           element={<Orders setOrderCount={setOrderCount} wsData={RTdata} />}
@@ -156,7 +157,13 @@ function AddMenu() {
     </section>
   );
 }
+function extractNumber(input) {
+  // Use regular expression to match numeric characters at the beginning of the string
+  const match = input.match(/^\d+/);
 
+  // If a match is found, convert it to a number and return, otherwise return null
+  return match ? parseInt(match[0], 10) : null;
+}
 function UpdateMenu() {
   const [foods, setFoods] = useState([]);
   const getMenu = async () => {
@@ -191,13 +198,7 @@ function UpdateMenu() {
   useEffect(() => {
     getMenu();
   }, []);
-  function extractNumber(input) {
-    // Use regular expression to match numeric characters at the beginning of the string
-    const match = input.match(/^\d+/);
 
-    // If a match is found, convert it to a number and return, otherwise return null
-    return match ? parseInt(match[0], 10) : null;
-  }
   const updateMenuHandler = async (e) => {
     let val = document.getElementById(
       extractNumber(e.target.id) + "value"
@@ -277,14 +278,14 @@ const Food = ({ foods }) => {
   const foodParsed = JSON.parse(foods["order_data"]);
   console.log(foodParsed);
   return (
-    <table>
+    <table key={2}>
       <tbody>
         {Object.entries(foodParsed).map(([id, food]) => (
           <tr key={id + "food"}>
             <td>{String(food["FoodName"])}</td>
-            <td>{String(food["Cost"])}</td>
+            {/* <td>{String(food["Cost"])}</td> */}
             <td>{String(food["Quantity"])}</td>
-            <td>{String(food["Cost"] * food["Quantity"])}</td>
+            {/* <td>{String(food["Cost"] * food["Quantity"])}</td> */}
           </tr>
         ))}
       </tbody>
@@ -326,9 +327,35 @@ function Orders({ setOrderCount, wsData }) {
     getOrders();
   }, []);
   const acceptOrderHandler = async (e) => {
-    console.log(JSON.parse(orders[0]["order_data"]));
-
     console.log("ok done");
+    let oId = orders[extractNumber(e.target.id)]["id"];
+    let jsonBody = JSON.stringify({
+      orderId: oId,
+    });
+    try {
+      let response = await fetch("/api/kitchen/acceptOrder", {
+        method: "put",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+          "Content-Type": "application/json",
+        },
+        body: jsonBody,
+      });
+      console.log(response.ok);
+      if (response.ok) {
+        try {
+          let resp = await response.json();
+          console.log(resp);
+          getOrders();
+        } catch (error) {
+          console.log("update menu error", error);
+        }
+      } else {
+        console.log("api updateMenu failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -367,27 +394,31 @@ function Orders({ setOrderCount, wsData }) {
           </tr>
         </thead>
         <tbody>
-          {orders.map((order, id) => (
-            <tr key={id}>
-              <td>{order["id"]}</td>
-              <td>
-                <Food foods={order} />
-              </td>
-              <td>{order["status"]}</td>
-              <td>{order["name"] ? order["name"] : "Not available"}</td>
-              <td>{order["phonenumber"]}</td>
-              <td>
-                <button
-                  id={id + "buttonOrder"}
-                  onClick={(e) => {
-                    acceptOrderHandler(e);
-                  }}
-                >
-                  Accept
-                </button>
-              </td>
-            </tr>
-          ))}
+          {orders.map((order, id) =>
+            order["status"] === "pending" ? (
+              <tr key={`${id}t`}>
+                <td>{order["id"]}</td>
+                <td>
+                  <Food foods={order} />
+                </td>
+                <td>{order["status"]}</td>
+                <td>{order["name"] ? order["name"] : "Not available"}</td>
+                <td>{order["phonenumber"]}</td>
+                <td>
+                  <button
+                    id={id + "buttonOrder"}
+                    onClick={(e) => {
+                      acceptOrderHandler(e);
+                    }}
+                  >
+                    Accept
+                  </button>
+                </td>
+              </tr>
+            ) : (
+              <></>
+            )
+          )}
         </tbody>
       </table>
     </>
