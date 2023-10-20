@@ -7,7 +7,7 @@ import Verify from "./Verify";
 import LoggedInContext from "../LoggedInContext";
 import { nameValidator } from "../../functions/input/Validator";
 import { currencyValidator } from "../../functions/input/Validator";
-
+import { TextField, Button } from "@mui/material";
 import TestKitchen from "./Test";
 
 export default function Kitchen() {
@@ -23,7 +23,7 @@ export default function Kitchen() {
   const [orderCount, setOrderCount] = useState(0);
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://192.168.101.100:8000/ws");
+    ws.current = new WebSocket("ws://192.168.78.96:8000/ws");
     ws.current.onopen = () => {
       console.log("Connected");
     };
@@ -48,9 +48,11 @@ export default function Kitchen() {
   return (
     <div>
       <center>
-        <Navigator orderCount={orderCount} />
         <h1>hi kitchen</h1>
         <Logout />
+        <div className="margin-top">
+          <Navigator orderCount={orderCount} />
+        </div>
       </center>
       <Routes>
         <Route path="/add" element={<AddMenu />} />
@@ -131,27 +133,55 @@ function AddMenu() {
   };
   return (
     <section className="kitchenDiv" id="addToMenu">
-      <span>Welcome to AddMenu</span>
       <center>
+        <h2>Welcome to AddMenu</h2>
+        <div className="margin-top"></div>
         <span style={{ color: Error.color }}>{Error.error}</span>
         <form action="" onSubmit={addFoodHandler}>
-          <input
+          <TextField
+            className="margin-left"
             type="text"
             name="foodName"
             id="foodName"
+            variant="outlined"
             placeholder="FoodName"
             value={FoodName}
             onChange={(e) => setFoodName(e.target.value)}
+            required
+            InputProps={{
+              style: {
+                color: "#000", // Change text color to white
+                borderColor: "white", // Change border color to white
+                backgroundColor: "white",
+              },
+            }}
           />
-          <input
+          <TextField
             type="text"
             name="cost"
+            className="margin-left"
+            variant="outlined"
             id="cost"
             placeholder="Cost"
             value={Cost}
             onChange={(e) => setCost(e.target.value)}
+            required
+            InputProps={{
+              style: {
+                color: "#000", // Change text color to white
+                borderColor: "white", // Change border color to white
+                backgroundColor: "white",
+              },
+            }}
           />
-          <input type="submit" value="Add Food" />
+          <Button
+            className="margin-left"
+            variant="contained"
+            type="submit"
+            value="Add Food"
+          >
+            Add Food
+          </Button>
         </form>
       </center>
     </section>
@@ -234,9 +264,9 @@ function UpdateMenu() {
     }
   };
   return (
-    <>
+    <center>
       <section className="kitchenDiv" id="addToMenu">
-        Welcome to Update menu
+        <h1>Welcome to Update menu</h1>
       </section>
       <table>
         <thead>
@@ -255,23 +285,35 @@ function UpdateMenu() {
               <td>{food["Cost"]}</td>
               <td>{food["Quantity"]}</td>
               <td>
-                <input type="text" id={id + "value"} />
+                <TextField
+                  type="text"
+                  placeholder="Quantity"
+                  id={id + "value"}
+                  InputProps={{
+                    style: {
+                      color: "#000", // Change text color to white
+                      borderColor: "white", // Change border color to white
+                      backgroundColor: "white",
+                    },
+                  }}
+                />
               </td>
               <td>
-                <button
+                <Button
+                  variant="contained"
                   id={id + "button"}
                   onClick={(e) => {
                     updateMenuHandler(e);
                   }}
                 >
                   Apply
-                </button>
+                </Button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-    </>
+    </center>
   );
 }
 const Food = ({ foods }) => {
@@ -360,16 +402,18 @@ function Orders({ setOrderCount, wsData }) {
   return (
     <>
       <section className="kitchenDiv" id="addToMenu">
-        Welcome to Orders
+        <h1>Welcome to Orders</h1>
       </section>
-      <button
+      {/* <Button
+        variant="contained"
         onClick={() => {
           setOrderCount((count) => count + 1);
         }}
       >
         add
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="contained"
         onClick={() => {
           setOrderCount((count) => {
             if (count > 0) {
@@ -380,8 +424,8 @@ function Orders({ setOrderCount, wsData }) {
         }}
       >
         subtract
-      </button>
-      <span>{wsData?.data}</span>
+      </Button>
+      <span>{wsData?.data}</span> */}
       <table>
         <thead>
           <tr>
@@ -405,14 +449,15 @@ function Orders({ setOrderCount, wsData }) {
                 <td>{order["name"] ? order["name"] : "Not available"}</td>
                 <td>{order["phonenumber"]}</td>
                 <td>
-                  <button
+                  <Button
+                    variant="contained"
                     id={id + "buttonOrder"}
                     onClick={(e) => {
                       acceptOrderHandler(e);
                     }}
                   >
                     Accept
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ) : (
@@ -440,20 +485,35 @@ function Navigator({ orderCount }) {
     <nav>
       <ul>
         <li>
-          <button id="atm" onClick={addToMenu}>
+          <Button
+            className="margin-left"
+            variant="contained"
+            id="atm"
+            onClick={addToMenu}
+          >
             Add to menu
-          </button>
+          </Button>
         </li>
         <li>
-          <button id="um" onClick={updateMenu}>
+          <Button
+            className="margin-left"
+            variant="contained"
+            id="um"
+            onClick={updateMenu}
+          >
             Update menu
-          </button>
+          </Button>
         </li>
         <li>
-          <button id="to" onClick={takeOrders}>
+          <Button
+            className="margin-left"
+            variant="contained"
+            id="to"
+            onClick={takeOrders}
+          >
             Take orders
             {orderCount > 0 ? <span>Count: {orderCount} </span> : null}
-          </button>
+          </Button>
         </li>
       </ul>
     </nav>

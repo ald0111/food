@@ -4,7 +4,6 @@ import ViewOrders from "./ViewOrders";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ProtectedRoutes from "../ProtectedRoutes";
-import Verify from "../kitchen/Verify";
 import { Logout } from "./Logout";
 import "./style1.css";
 import "./style2.css";
@@ -144,6 +143,13 @@ function User() {
                       min="0"
                       max="100"
                       placeholder="0"
+                      InputProps={{
+                        style: {
+                          color: "#000", // Change text color to white
+                          borderColor: "white", // Change border color to white
+                          backgroundColor: "white",
+                        },
+                      }}
                     />
                   </td>
                   <td>
@@ -162,6 +168,7 @@ function User() {
             )}
           </tbody>
         </table>
+        <div className="margin-top"></div>
         <h1>Cart</h1>
         <table>
           <thead>
@@ -183,6 +190,7 @@ function User() {
             ))}
           </tbody>
         </table>
+        <div className="margin-top"></div>
         <PlaceOrder cart={cart} getMenu={getMenu} setCart={setCart} />
       </>
     );
@@ -190,15 +198,17 @@ function User() {
   return (
     <ProtectedRoutes>
       <center>
-        <h1>HII! {localStorage.name}</h1>
+        <h1>Hi, {localStorage.name}</h1>
         <Logout />
-        <h1>Yello!</h1>
+        <h1>Greetings!</h1>
+        <div className="margin-top"></div>
         <Button variant="contained" onClick={viewOrders}>
           View Orders
         </Button>
         <Button className="margin-left" variant="contained" onClick={viewMenu}>
           Place Orders
         </Button>
+        <div className="margin-top"></div>
         <Routes>
           <Route index element={<MenuPlace />} />
           <Route path="/orders" element={<ViewOrders />} />

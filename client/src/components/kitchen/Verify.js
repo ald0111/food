@@ -64,7 +64,7 @@ function Verify() {
   };
   useEffect(() => {
     fetchOrder();
-  }, [token]);
+  });
   return (
     <>
       <div>ViewOrders</div>

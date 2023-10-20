@@ -98,7 +98,7 @@ function Login(props) {
     <ProtectedRoutes rev={false}>
       <center>
         <div className="form-container">
-          <h2 className="color-black">Login</h2>
+          <h1 className="color-black">Login</h1>
 
           <form
             onSubmit={formik.handleSubmit}

@@ -1,3 +1,22 @@
 body {
   background-color: #292c44;
 }
+h1 {
+  color: #fff;
+  font-size: 5cap;
+  text-shadow: #fff 0 0 7px;
+}
+thead > tr {
+  background-color: #444444;
+  height: 8vh;
+}
+.qr-box {
+  width: 600px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 3px 3px 15px rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+}
+.margin-left {
+  margin-left: 10px;
+}

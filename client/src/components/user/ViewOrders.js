@@ -20,9 +20,11 @@ function ViewOrders() {
   }, []);
   return (
     <>
-      <div>ViewOrders</div>
+      <div>
+        <h2>ViewOrders</h2>
+      </div>
       {orders.map((order, i) => (
-        <div key={i}>
+        <div className="qr-box margin-top" key={i}>
           <QRCode
             value={"http://192.168.78.96:3000/kitchen/verify/" + order}
             bgColor="#292C33"

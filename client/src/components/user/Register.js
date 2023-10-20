@@ -78,7 +78,7 @@ export default function Register() {
   return (
     <center>
       <div className="form-container">
-        <h2 className="color-black">Login</h2>
+        <h1 className="color-black">Register</h1>
         <form
           onSubmit={formik.handleSubmit}
           action="/api/user/register"

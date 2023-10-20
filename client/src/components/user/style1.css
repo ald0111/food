@@ -34,7 +34,9 @@ body {
   font-size: 14px;
   margin-top: 5px;
 }
-
+h1 {
+  font-size: 4vw;
+}
 /* Optional: Style form elements on focus */
 input:focus,
 select:focus,

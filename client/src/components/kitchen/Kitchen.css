@@ -6,8 +6,28 @@ nav > ul > li {
 }
 .kitchenDiv {
   margin-top: 10vh;
-  background-color: gray;
 }
 #addToMenu form > input {
   display: block;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #5e5e5e;
+}
+tr,
+td {
+  text-align: center;
+}
+tr {
+  background-color: #181818;
+}
+td {
+  padding: 3vw 0;
+  text-align: center;
+  padding: 8px;
+}
+.margin-left {
+  margin-left: 10px;
 }
