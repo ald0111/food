@@ -134,7 +134,7 @@ function AddMenu() {
   return (
     <section className="kitchenDiv" id="addToMenu">
       <center>
-        <h2>Welcome to AddMenu</h2>
+        <h1>Welcome to AddMenu</h1>
         <div className="margin-top"></div>
         <span style={{ color: Error.color }}>{Error.error}</span>
         <form action="" onSubmit={addFoodHandler}>
@@ -402,7 +402,9 @@ function Orders({ setOrderCount, wsData }) {
   return (
     <>
       <section className="kitchenDiv" id="addToMenu">
-        <h1>Welcome to Orders</h1>
+        <center>
+          <h1>Welcome to Orders</h1>
+        </center>
       </section>
       {/* <Button
         variant="contained"

@@ -1,7 +1,6 @@
 /* Apply a basic reset to remove default styles */
 * {
   box-sizing: border-box;
-  margin: 0;
   padding: 0;
 }
 

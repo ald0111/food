@@ -24,14 +24,18 @@ function ViewOrders() {
         <h2>ViewOrders</h2>
       </div>
       {orders.map((order, i) => (
-        <div className="qr-box margin-top" key={i}>
-          <QRCode
-            value={"http://192.168.78.96:3000/kitchen/verify/" + order}
-            bgColor="#292C33"
-            fgColor="#ffffff"
-            size={600}
-          />
-        </div>
+        <>
+          <h2>{i + 1}</h2>
+          <div className="qr-box margin-top" key={i}>
+            <QRCode
+              value={"http://192.168.78.96:3000/kitchen/verify/" + order}
+              bgColor="#292C33"
+              fgColor="#ffffff"
+              size={600}
+            />
+          </div>
+          <div className="margin-top"></div>
+        </>
       ))}
     </>
   );
